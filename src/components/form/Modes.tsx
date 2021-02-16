@@ -5,19 +5,69 @@ import {
   Radio,
   RadioGroup,
   Stack,
-  StackProps
+  StackProps,
+  useBreakpointValue
 } from '@chakra-ui/react'
 import { Select } from '@chakra-ui/react'
+import { exams, Exam } from 'src/defs'
 
-export interface ModesProps extends StackProps {}
+export interface ModesProps extends StackProps {
+  onExamChange: (exam: Exam | null) => void
+}
 
-export const Modes: React.FC<ModesProps> = ({ ...props }) => {
+export const Modes: React.FC<ModesProps> = ({ onExamChange, ...props }) => {
   const [mode, setMode] = React.useState('')
   const [osseuse, setOsseuse] = React.useState('')
   const [thyroide, setThyroide] = React.useState('')
   const [cardiaque, setCardiaque] = React.useState('')
   const [tep, setTep] = React.useState('')
   const [aJeun, setAJeun] = React.useState('')
+  const radioSpacing = useBreakpointValue({ base: 4, sm: 2 })
+
+  React.useEffect(() => {
+    let exam: Exam | null = null
+    if (mode === 'osseuse') {
+      exam = osseuse === 'tardive' ? exams.osseuseTardive : exams.osseusePrecoce
+    } else if (mode === 'parathyroides') {
+      exam = exams.parathyroide
+    } else if (mode === 'thyroide') {
+      if (thyroide === 'iode123') {
+        exam = exams.thyroideIode
+      } else if (thyroide === 'technetium') {
+        exam = exams.thyroideTechnetiumLibre
+      }
+    } else if (mode === 'fevg') {
+      exam = exams.fractionEjectionVentriculaireGauche
+    } else if (mode === 'cardiaque') {
+      if (cardiaque === 'mibi') {
+        exam = exams.cardiologieMIBI
+      } else if (cardiaque === 'tl201') {
+        exam = exams.cardiologieThallium
+      }
+    } else if (mode === 'tep') {
+      switch (tep) {
+        case 'ffdg':
+          exam = exams.fdg
+          break
+        case 'fcholine':
+          exam = exams.choline
+          break
+        case 'dotatoc':
+          exam = exams.dotatoc
+          break
+        case 'psma':
+          exam = exams.psma
+          break
+        case 'unknown':
+          if (aJeun === 'yes') {
+            exam = exams.fdg
+          }
+          break
+      }
+    }
+    onExamChange(exam)
+  }, [mode, osseuse, thyroide, cardiaque, tep, aJeun, onExamChange])
+
   return (
     <Stack spacing={4} {...props}>
       <FormControl>
@@ -50,7 +100,7 @@ export const Modes: React.FC<ModesProps> = ({ ...props }) => {
       {mode === 'thyroide' && (
         <FormControl>
           <RadioGroup value={thyroide} onChange={setThyroide as any}>
-            <Stack>
+            <Stack spacing={radioSpacing}>
               <Radio value="iode123">A l'iode 123</Radio>
               <Radio value="technetium">Au Technétium libre</Radio>
               <Radio value="unknown">Je ne sais pas</Radio>
@@ -61,7 +111,7 @@ export const Modes: React.FC<ModesProps> = ({ ...props }) => {
       {mode === 'cardiaque' && (
         <FormControl>
           <RadioGroup value={cardiaque} onChange={setCardiaque as any}>
-            <Stack>
+            <Stack spacing={radioSpacing}>
               <Radio value="mibi">MIBI</Radio>
               <Radio value="tl201">
                 Tl<sup>201</sup>
@@ -75,7 +125,7 @@ export const Modes: React.FC<ModesProps> = ({ ...props }) => {
         <>
           <FormControl>
             <RadioGroup value={tep} onChange={setTep as any}>
-              <Stack>
+              <Stack spacing={radioSpacing}>
                 <Radio value="ffdg">
                   <sup>18</sup>FFDG
                 </Radio>
@@ -90,11 +140,11 @@ export const Modes: React.FC<ModesProps> = ({ ...props }) => {
           </FormControl>
           {tep === 'unknown' && (
             <FormControl id="modes-tep-jeun">
-              <FormLabel>
+              <FormLabel mt={4}>
                 Le patient devait-il être à jeun avant son examen ?
               </FormLabel>
               <RadioGroup value={aJeun} onChange={setAJeun as any}>
-                <Stack>
+                <Stack spacing={radioSpacing}>
                   <Radio value="yes">Oui</Radio>
                   <Radio value="no">Non</Radio>
                   <Radio value="unknown">Je ne sais pas</Radio>

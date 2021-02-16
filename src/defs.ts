@@ -21,7 +21,22 @@ export interface Exam {
   x: number
 }
 
-export const exams: { [key: string]: Exam } = {
+export type Exams =
+  | 'osseusePrecoce'
+  | 'osseuseTardive'
+  | 'parathyroide'
+  | 'thyroideTechnetiumLibre'
+  | 'fractionEjectionVentriculaireGauche'
+  | 'cardiologieMIBI'
+  | 'choline'
+  | 'fdg'
+  | 'datscan'
+  | 'thyroideIode'
+  | 'psma'
+  | 'dotatoc'
+  | 'cardiologieThallium'
+
+export const exams: Record<Exams, Exam> = {
   osseusePrecoce: {
     isotope: isotopes.Tc99m,
     x: 0.03831046
@@ -69,5 +84,9 @@ export const exams: { [key: string]: Exam } = {
   dotatoc: {
     isotope: isotopes.Ga68,
     x: 0.268963267
+  },
+  cardiologieThallium: {
+    isotope: isotopes.Tl201,
+    x: 0.033019412
   }
 }

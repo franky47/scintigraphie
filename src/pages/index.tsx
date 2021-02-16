@@ -1,13 +1,15 @@
 import React from 'react'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { Container, Stack } from '@chakra-ui/react'
+import { Box, Container, Stack, Text } from '@chakra-ui/react'
 import { Modes } from 'src/components/form/Modes'
 import { Header } from 'src/components/Header'
+import { Exam } from 'src/defs'
 
 // --
 
 const IndexPage: NextPage = () => {
+  const [exam, setExam] = React.useState<Exam | null>(null)
   return (
     <>
       <Head>
@@ -20,7 +22,19 @@ const IndexPage: NextPage = () => {
       <Container>
         <Header mt={4} mb={8} />
         <Stack spacing={4}>
-          <Modes />
+          <Modes onExamChange={setExam} />
+          {exam && (
+            <Box>
+              <Text>
+                Isotope:{' '}
+                <b>
+                  {exam.isotope.symbol}
+                  <sup>{exam.isotope.exponent}</sup>
+                </b>
+              </Text>
+              <Text>x: {exam.x || 'A définir'}</Text>
+            </Box>
+          )}
         </Stack>
       </Container>
     </>
