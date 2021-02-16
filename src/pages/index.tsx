@@ -112,7 +112,7 @@ const IndexPage: NextPage = () => {
           </FormControl>
           <FormControl>
             <FormLabel>Activité au moment de l'administration</FormLabel>
-            <NumberInput>
+            <NumberInput min={0}>
               <NumberInputField
                 placeholder="0"
                 inputmode="decimal"
@@ -129,7 +129,7 @@ const IndexPage: NextPage = () => {
             <FormLabel>
               Durée de la prise en charge au plus près du patient
             </FormLabel>
-            <NumberInput>
+            <NumberInput min={0}>
               <NumberInputField
                 placeholder="0"
                 inputmode="decimal"
