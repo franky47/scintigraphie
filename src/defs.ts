@@ -1,17 +1,17 @@
 export interface Isotope {
   symbol: string
   exponent: string
-  Te: number
+  halfLife: number
 }
 
 export type Isotopes = 'Tc99m' | 'F18' | 'I123' | 'Ga68' | 'Tl201'
 
 export const isotopes: Record<Isotopes, Isotope> = {
-  Tc99m: { symbol: 'Tc', exponent: '99m', Te: 6.02 },
-  F18: { symbol: 'F', exponent: '18', Te: 1.83 },
-  I123: { symbol: 'I', exponent: '123', Te: 13.2 },
-  Ga68: { symbol: 'Ga', exponent: '68', Te: 1.13 },
-  Tl201: { symbol: 'Tl', exponent: '201', Te: 72.93 }
+  Tc99m: { symbol: 'Tc', exponent: '99m', halfLife: 6.02 },
+  F18: { symbol: 'F', exponent: '18', halfLife: 1.83 },
+  I123: { symbol: 'I', exponent: '123', halfLife: 13.2 },
+  Ga68: { symbol: 'Ga', exponent: '68', halfLife: 1.13 },
+  Tl201: { symbol: 'Tl', exponent: '201', halfLife: 72.93 }
 }
 
 // --
