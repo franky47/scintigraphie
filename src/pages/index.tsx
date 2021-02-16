@@ -57,7 +57,10 @@ function useDoseCalculator(
   //   deltaT2,
   //   dose
   // })
-  return dose.toFixed(2)
+  const formatter = Intl.NumberFormat('fr-FR', {
+    maximumFractionDigits: 2
+  })
+  return formatter.format(dose)
 }
 
 const IndexPage: NextPage = () => {
@@ -139,7 +142,12 @@ const IndexPage: NextPage = () => {
             <StatLabel fontSize="md">
               Dose cumulée pendant ma prise en charge:
             </StatLabel>
-            <StatNumber fontSize="4xl">
+            <StatNumber
+              fontSize="4xl"
+              css={{
+                fontVariantNumeric: 'tabular-nums'
+              }}
+            >
               {dose}{' '}
               <Text as="span" fontSize="sm" color="gray.500">
                 μSv
