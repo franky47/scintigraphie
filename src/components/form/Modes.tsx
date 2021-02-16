@@ -72,7 +72,11 @@ export const Modes: React.FC<ModesProps> = ({ onExamChange, ...props }) => {
     <Stack spacing={4} {...props}>
       <FormControl>
         <FormLabel>Quelle scintigraphie a fait mon patient ?</FormLabel>
-        <Select value={mode} onChange={e => setMode(e.target.value)}>
+        <Select
+          value={mode}
+          onChange={e => setMode(e.target.value)}
+          placeholder={mode ? undefined : 'Choisir un type de scintigraphie'}
+        >
           <option value="osseuse">Osseuse</option>
           <option value="parathyroides">Parathyroïdes</option>
           <option value="thyroide">Thyroïde</option>
