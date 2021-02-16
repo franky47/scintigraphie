@@ -97,8 +97,7 @@ const IndexPage: NextPage = () => {
               Heure d'administration du médicament radiopharmaceutique
               {exam && (
                 <Text as="span" ml={1} fontSize="sm" color="gray.500">
-                  ({exam.isotope.symbol}
-                  <sup>{exam.isotope.exponent}</sup>)
+                  (<sup>{exam.isotope.exponent}</sup>){exam.isotope.symbol}
                 </Text>
               )}
             </FormLabel>
