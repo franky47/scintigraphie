@@ -80,7 +80,8 @@ const IndexPage: NextPage = () => {
     <>
       <Head>
         <title>
-          Scintigraphie{process.env.NODE_ENV === 'development' && ' [local]'}
+          Scintigraphie
+          {process.env.NODE_ENV === 'development' ? ' [local]' : ''}
         </title>
         <link
           rel="icon"
@@ -146,10 +147,17 @@ const IndexPage: NextPage = () => {
           <Box as="footer">
             <Text textAlign="center" fontSize="xs" color="gray.500">
               Projet mené par{' '}
-              <OutgoingLink href="#" textDecor="underline">
+              <OutgoingLink
+                href="https://linkedin.com/in/julie-dubar-197466203"
+                textDecor="underline"
+              >
                 Julie Dubar
-              </OutgoingLink>{' '}
-              et réalisé par{' '}
+              </OutgoingLink>
+              {' et '}
+              <OutgoingLink href="#" textDecor="underline">
+                Sarah Vuillez
+              </OutgoingLink>
+              , réalisé par{' '}
               <OutgoingLink
                 href="https://francoisbest.com"
                 textDecor="underline"
