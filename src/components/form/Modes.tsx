@@ -85,8 +85,7 @@ export const Modes: React.FC<ModesProps> = ({ onExamChange, ...props }) => {
         <FormControl>
           <FormLabel>
             L’injection du radioisotope a t-elle été faite{' '}
-            <b>il y a plus de 4 heures</b> avant le début de la prise en charge
-            ?
+            <b>plus de 4 heures avant</b> le début de la prise en charge ?
           </FormLabel>
           <RadioGroup value={osseuse} onChange={setOsseuse as any}>
             <Stack>
