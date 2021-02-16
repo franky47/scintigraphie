@@ -21,6 +21,7 @@ import { StatLabel } from '@chakra-ui/react'
 import { StatNumber } from '@chakra-ui/react'
 import { StatHelpText } from '@chakra-ui/react'
 import { OutgoingLink } from '@47ng/chakra-next'
+import { Isotope } from 'src/components/Isotope'
 
 // --
 
@@ -96,10 +97,12 @@ const IndexPage: NextPage = () => {
             <FormLabel>
               Heure d'administration du médicament radiopharmaceutique
               {exam && (
-                <Text as="span" ml={1} fontSize="sm" color="gray.500">
-                  (<sup>{exam.isotope.exponent}</sup>
-                  {exam.isotope.symbol})
-                </Text>
+                <Isotope
+                  {...exam.isotope}
+                  ml={1}
+                  fontSize="sm"
+                  color="gray.500"
+                />
               )}
             </FormLabel>
             <TimeInput onChange={setStartTime} />
