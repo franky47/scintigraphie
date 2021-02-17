@@ -27,7 +27,7 @@ export const TimeInput: React.FC<TimeInputProps> = ({ onChange, ...props }) => {
     <Input
       onChange={_onChange}
       type="time"
-      inputmode="numeric"
+      inputMode="numeric"
       placeholder="--:--"
       pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]"
       {...props}

@@ -1,27 +1,15 @@
 import React from 'react'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import {
-  Box,
-  Container,
-  FormControl,
-  FormLabel,
-  InputRightElement,
-  NumberInput,
-  NumberInputField,
-  Stack,
-  Text
-} from '@chakra-ui/react'
+import { Container, FormControl, FormLabel, Stack } from '@chakra-ui/react'
 import { Modes } from 'src/components/form/Modes'
 import { Header } from 'src/components/Header'
 import { Exam } from 'src/defs'
 import { TimeInput } from 'src/components/form/TimeInput'
-import { Stat } from '@chakra-ui/react'
-import { StatLabel } from '@chakra-ui/react'
-import { StatNumber } from '@chakra-ui/react'
-import { StatHelpText } from '@chakra-ui/react'
-import { OutgoingLink } from '@47ng/chakra-next'
 import { Isotope } from 'src/components/Isotope'
+import { NumericInput } from 'src/components/form/NumericInput'
+import { ValueDisplay } from 'src/components/ValueDisplay'
+import { Footer } from 'src/components/Footer'
 
 // --
 
@@ -39,7 +27,7 @@ function useDoseCalculator(
     Number.isNaN(duration) ||
     Number.isNaN(activity)
   ) {
-    return '--'
+    return undefined
   }
   const hl = exam.isotope.halfLife
   const deltaT1 = (endTime - startTime) / 3600_000 // ms -> hours
@@ -57,11 +45,10 @@ function useDoseCalculator(
   //   deltaT2,
   //   dose
   // })
-  const formatter = Intl.NumberFormat('fr-FR', {
-    maximumFractionDigits: 2
-  })
-  return formatter.format(dose)
+  return dose
 }
+
+// --
 
 const IndexPage: NextPage = () => {
   const [exam, setExam] = React.useState<Exam | null>(null)
@@ -70,15 +57,6 @@ const IndexPage: NextPage = () => {
   const [duration, setDuration] = React.useState(NaN)
   const [activity, setActivity] = React.useState(NaN)
   const dose = useDoseCalculator(exam, startTime, endTime, duration, activity)
-
-  const unitProps = {
-    userSelect: 'none',
-    pr: 2,
-    justifyContent: 'flex-end',
-    fontSize: 'sm',
-    fontStyle: 'italic',
-    color: 'gray.500'
-  } as const
 
   return (
     <>
@@ -112,14 +90,7 @@ const IndexPage: NextPage = () => {
           </FormControl>
           <FormControl>
             <FormLabel>Activité au moment de l'administration</FormLabel>
-            <NumberInput min={0}>
-              <NumberInputField
-                placeholder="0"
-                inputmode="decimal"
-                onChange={e => setActivity(parseInt(e.target.value))}
-              />
-              <InputRightElement children="MBq" {...unitProps} />
-            </NumberInput>
+            <NumericInput onChange={setActivity} unit="MBq" />
           </FormControl>
           <FormControl>
             <FormLabel>Heure de prise en charge du patient</FormLabel>
@@ -129,62 +100,10 @@ const IndexPage: NextPage = () => {
             <FormLabel>
               Durée de la prise en charge au plus près du patient
             </FormLabel>
-            <NumberInput min={0}>
-              <NumberInputField
-                placeholder="0"
-                inputmode="decimal"
-                onChange={e => setDuration(parseInt(e.target.value))}
-              />
-              <InputRightElement children="minutes" {...unitProps} />
-            </NumberInput>
+            <NumericInput onChange={setDuration} unit="minutes" />
           </FormControl>
-          <Stat>
-            <StatLabel fontSize="md">
-              Dose cumulée pendant ma prise en charge:
-            </StatLabel>
-            <StatNumber
-              fontSize="4xl"
-              css={{
-                fontVariantNumeric: 'tabular-nums'
-              }}
-            >
-              {dose}{' '}
-              <Text as="span" fontSize="sm" color="gray.500">
-                μSv
-              </Text>
-            </StatNumber>
-            <StatHelpText>à 50cm du patient</StatHelpText>
-          </Stat>
-          <Box as="footer">
-            <Text textAlign="center" fontSize="xs" color="gray.500">
-              Projet mené par{' '}
-              <OutgoingLink
-                href="https://linkedin.com/in/julie-dubar-197466203"
-                textDecor="underline"
-              >
-                Julie Dubar
-              </OutgoingLink>
-              {' et '}
-              <OutgoingLink href="#" textDecor="underline">
-                Sarah Vuillez
-              </OutgoingLink>
-              , réalisé par{' '}
-              <OutgoingLink
-                href="https://francoisbest.com"
-                textDecor="underline"
-              >
-                François Best
-              </OutgoingLink>
-              <br />
-              Aucune donnée n'est enregistrée •{' '}
-              <OutgoingLink
-                href="https://github.com/franky47/scintigraphie"
-                textDecor="underline"
-              >
-                Code source
-              </OutgoingLink>
-            </Text>
-          </Box>
+          <ValueDisplay value={dose} />
+          <Footer />
         </Stack>
       </Container>
     </>
