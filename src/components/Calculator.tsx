@@ -6,17 +6,24 @@ import { TimeInput } from 'src/components/form/TimeInput'
 import { Isotope } from 'src/components/Isotope'
 import { NumericInput } from 'src/components/form/NumericInput'
 import { ValueDisplay } from 'src/components/ValueDisplay'
+import { Graph } from 'src/components/Graph'
 import { useDoseCalculation } from 'src/hooks/useDoseCalculation'
 
 // --
 
 export const Calculator: React.FC<BoxProps> = ({ ...props }) => {
   const [exam, setExam] = React.useState<Exam | null>(null)
+  const [injectionTime, setInjectionTime] = React.useState(NaN)
   const [startTime, setStartTime] = React.useState(NaN)
-  const [endTime, setEndTime] = React.useState(NaN)
   const [duration, setDuration] = React.useState(NaN)
   const [activity, setActivity] = React.useState(NaN)
-  const dose = useDoseCalculation(exam, startTime, endTime, duration, activity)
+  const dose = useDoseCalculation(
+    exam,
+    injectionTime,
+    startTime,
+    duration,
+    activity
+  )
 
   return (
     <Stack spacing={8} {...props}>
@@ -28,7 +35,7 @@ export const Calculator: React.FC<BoxProps> = ({ ...props }) => {
             <Isotope {...exam.isotope} ml={1} fontSize="sm" color="gray.500" />
           )}
         </FormLabel>
-        <TimeInput onChange={setStartTime} />
+        <TimeInput onChange={setInjectionTime} />
       </FormControl>
       <FormControl>
         <FormLabel>Activité au moment de l'administration</FormLabel>
@@ -36,7 +43,7 @@ export const Calculator: React.FC<BoxProps> = ({ ...props }) => {
       </FormControl>
       <FormControl>
         <FormLabel>Heure de prise en charge du patient</FormLabel>
-        <TimeInput onChange={setEndTime} />
+        <TimeInput onChange={setStartTime} />
       </FormControl>
       <FormControl>
         <FormLabel>
@@ -45,6 +52,13 @@ export const Calculator: React.FC<BoxProps> = ({ ...props }) => {
         <NumericInput onChange={setDuration} unit="minutes" />
       </FormControl>
       <ValueDisplay value={dose} />
+      <Graph
+        exam={exam}
+        activity={activity}
+        injectionTime={injectionTime}
+        startTime={startTime}
+        duration={duration}
+      />
     </Stack>
   )
 }
