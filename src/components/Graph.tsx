@@ -2,6 +2,8 @@ import React from 'react'
 import {
   Box,
   BoxProps,
+  Center,
+  Text,
   useColorMode,
   useColorModeValue
 } from '@chakra-ui/react'
@@ -179,7 +181,13 @@ export const Graph: React.FC<GraphProps> = ({
   return (
     <>
       <Box d={show ? 'block' : 'none'} {...boxProps} {...props} ref={ref} />
-      <Box d={show ? 'none' : 'block'} {...boxProps} {...props} />
+      <Center d={show ? 'none' : 'flex'} {...boxProps} {...props}>
+        <Text textAlign="center" color="gray.500" fontSize="sm">
+          Informations insuffisantes
+          <br />
+          pour afficher le graphe d'activité
+        </Text>
+      </Center>
     </>
   )
 }
