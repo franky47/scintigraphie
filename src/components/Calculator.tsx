@@ -8,6 +8,7 @@ import { NumericInput } from 'src/components/form/NumericInput'
 import { ValueDisplay } from 'src/components/ValueDisplay'
 import { Graph } from 'src/components/Graph'
 import { useDoseCalculation } from 'src/hooks/useDoseCalculation'
+import { DistanceInput } from './form/DistanceInput'
 
 // --
 
@@ -17,12 +18,14 @@ export const Calculator: React.FC<BoxProps> = ({ ...props }) => {
   const [startTime, setStartTime] = React.useState(NaN)
   const [duration, setDuration] = React.useState(NaN)
   const [activity, setActivity] = React.useState(NaN)
+  const [distance, setDistance] = React.useState(NaN)
   const dose = useDoseCalculation(
     exam,
     injectionTime,
     startTime,
     duration,
-    activity
+    activity,
+    distance
   )
 
   return (
@@ -51,7 +54,8 @@ export const Calculator: React.FC<BoxProps> = ({ ...props }) => {
         </FormLabel>
         <NumericInput onChange={setDuration} unit="minutes" />
       </FormControl>
-      <ValueDisplay value={dose} />
+      <DistanceInput onChange={setDistance} />
+      <ValueDisplay value={dose} distance={distance} />
       <Graph
         exam={exam}
         activity={activity}

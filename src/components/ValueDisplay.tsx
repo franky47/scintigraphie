@@ -11,6 +11,7 @@ import { useSpring, useReducedMotion, useMotionValue } from 'framer-motion'
 
 export interface ValueDisplayProps extends BoxProps {
   value?: number
+  distance?: number
 }
 
 const formatter = Intl.NumberFormat('fr-FR', {
@@ -24,6 +25,7 @@ function formatValue(value: number | undefined) {
 
 export const ValueDisplay: React.FC<ValueDisplayProps> = ({
   value,
+  distance,
   ...props
 }) => {
   return (
@@ -42,7 +44,9 @@ export const ValueDisplay: React.FC<ValueDisplayProps> = ({
           μSv
         </Text>
       </StatNumber>
-      <StatHelpText>à 50cm du patient</StatHelpText>
+      {!!distance && !!value && (
+        <StatHelpText>à {distance}cm du patient</StatHelpText>
+      )}
     </Stat>
   )
 }
