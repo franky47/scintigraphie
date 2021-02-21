@@ -7,7 +7,6 @@ import {
   ListItem,
   Divider,
   Icon,
-  useColorModeValue,
   List
 } from '@chakra-ui/react'
 import { OutgoingLink } from '@47ng/chakra-next'
