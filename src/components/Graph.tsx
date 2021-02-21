@@ -8,6 +8,7 @@ import {
   useColorModeValue
 } from '@chakra-ui/react'
 import { Exam } from 'src/defs'
+import { useQueryState } from 'next-usequerystate'
 
 export interface GraphProps extends BoxProps {
   activity: number
@@ -27,6 +28,7 @@ export const Graph: React.FC<GraphProps> = ({
 }) => {
   const ref = React.useRef<HTMLDivElement>(null)
   const { colorMode } = useColorMode()
+  const [urlShow] = useQueryState('showGraph')
 
   React.useEffect(() => {
     const Desmos = require('desmos')
@@ -178,6 +180,9 @@ export const Graph: React.FC<GraphProps> = ({
     borderWidth: useColorModeValue('1px', 0)
   }
 
+  if (!urlShow) {
+    return null
+  }
   return (
     <>
       <Box d={show ? 'block' : 'none'} {...boxProps} {...props} ref={ref} />
