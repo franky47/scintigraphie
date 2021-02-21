@@ -5,6 +5,8 @@ import { Container } from '@chakra-ui/react'
 import { Header } from 'src/components/Header'
 import { Footer } from 'src/components/Footer'
 import { Calculator } from 'src/components/Calculator'
+import { Intro } from 'src/components/Intro'
+import { Outro } from 'src/components/Outro'
 
 const IndexPage: NextPage = () => {
   return (
@@ -21,7 +23,9 @@ const IndexPage: NextPage = () => {
       </Head>
       <Container my={4}>
         <Header mb={8} />
-        <Calculator />
+        <Intro mb={12} />
+        <Calculator mb={12} />
+        <Outro mb={12} />
         <Footer my={8} />
       </Container>
     </>
