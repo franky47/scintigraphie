@@ -51,7 +51,7 @@ export const exams: Record<Exams, Exam> = {
   },
   thyroideTechnetiumLibre: {
     isotope: isotopes.Tc99m,
-    x: 0 // todo: TBD
+    x: 0.03882508
   },
   fractionEjectionVentriculaireGauche: {
     isotope: isotopes.Tc99m,
@@ -79,7 +79,7 @@ export const exams: Record<Exams, Exam> = {
   },
   psma: {
     isotope: isotopes.Ga68,
-    x: 0 // todo: TBD
+    x: 0.320006462
   },
   dotatoc: {
     isotope: isotopes.Ga68,
