@@ -23,9 +23,7 @@
     "dev": "next",
     "test": "jest --coverage --passWithNoTests",
     "test:watch": "jest --watch",
-    "build:next": "next build",
-    "build:export": "next export",
-    "build": "run-s build:next build:export",
+    "build": "next build",
     "analyze": "ANALYZE=true next build",
     "ci": "run-s test build"
   },
