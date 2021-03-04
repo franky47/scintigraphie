@@ -1,14 +1,7 @@
+import { Box, BoxProps, useColorMode } from '@chakra-ui/react'
 import React from 'react'
-import {
-  Box,
-  BoxProps,
-  Center,
-  Text,
-  useColorMode,
-  useColorModeValue
-} from '@chakra-ui/react'
 import { Exam } from 'src/defs'
-import { useQueryState } from 'next-usequerystate'
+import { GraphSkeleton, useGraphSkeletonProps } from './GraphSkeleton'
 
 export interface GraphProps extends BoxProps {
   activity: number
@@ -28,7 +21,6 @@ export const Graph: React.FC<GraphProps> = ({
 }) => {
   const ref = React.useRef<HTMLDivElement>(null)
   const { colorMode } = useColorMode()
-  const [urlShow] = useQueryState('showGraph')
 
   React.useEffect(() => {
     const Desmos = require('desmos')
@@ -172,27 +164,12 @@ export const Graph: React.FC<GraphProps> = ({
     !Number.isNaN(startTime) &&
     !Number.isNaN(duration)
 
-  const boxProps = {
-    h: '300px',
-    bg: useColorModeValue('white', 'black'),
-    rounded: 'md',
-    overflow: 'hidden',
-    borderWidth: useColorModeValue('1px', 0)
-  }
+  const boxProps = useGraphSkeletonProps()
 
-  if (!urlShow) {
-    return null
-  }
   return (
     <>
       <Box d={show ? 'block' : 'none'} {...boxProps} {...props} ref={ref} />
-      <Center d={show ? 'none' : 'flex'} {...boxProps} {...props}>
-        <Text textAlign="center" color="gray.500" fontSize="sm">
-          Informations insuffisantes
-          <br />
-          pour afficher le graphe d'activité
-        </Text>
-      </Center>
+      <GraphSkeleton d={show ? 'none' : 'flex'} />
     </>
   )
 }

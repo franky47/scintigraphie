@@ -50,8 +50,10 @@ function useUnit(value: number | undefined) {
     v *= 0.001
     i += 1
   }
+  if (i > units.length) {
+  }
   return {
-    unit: units[i],
+    unit: i > units.length ? `1e${(i - units.length) * 3}Sv` : units[i],
     value: v
   }
 }
@@ -87,7 +89,7 @@ export const ValueDisplay: React.FC<ValueDisplayProps> = ({
         >
           <Text
             as="span"
-            color={useColorModeValue(`${accent}.800`, `${accent}.300`)}
+            color={useColorModeValue(`${accent}.600`, `${accent}.300`)}
           >
             <AnimatedValue value={value} />{' '}
           </Text>

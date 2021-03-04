@@ -1,14 +1,28 @@
-import React from 'react'
 import { BoxProps, FormControl, FormLabel, Stack } from '@chakra-ui/react'
+import { useQueryState } from 'next-usequerystate'
+import dynamic from 'next/dynamic'
+import React from 'react'
 import { Modes } from 'src/components/form/Modes'
-import { Exam } from 'src/defs'
+import { NumericInput } from 'src/components/form/NumericInput'
 import { TimeInput } from 'src/components/form/TimeInput'
 import { Isotope } from 'src/components/Isotope'
-import { NumericInput } from 'src/components/form/NumericInput'
 import { ValueDisplay } from 'src/components/ValueDisplay'
-import { Graph } from 'src/components/Graph'
+import { Exam } from 'src/defs'
 import { useDoseCalculation } from 'src/hooks/useDoseCalculation'
 import { DistanceInput } from './form/DistanceInput'
+import type { GraphProps } from './Graph'
+import { GraphSkeleton } from './GraphSkeleton'
+
+const Graph = dynamic<GraphProps>(
+  () =>
+    import('src/components/Graph' /* webpackChunkName: "graph" */).then(
+      mod => mod.Graph
+    ),
+  {
+    loading: () => <GraphSkeleton />,
+    ssr: false
+  }
+)
 
 // --
 
@@ -19,6 +33,7 @@ export const Calculator: React.FC<BoxProps> = ({ ...props }) => {
   const [duration, setDuration] = React.useState(NaN)
   const [activity, setActivity] = React.useState(NaN)
   const [distance, setDistance] = React.useState(NaN)
+  const [showGraph] = useQueryState('showGraph')
   const dose = useDoseCalculation(
     exam,
     injectionTime,
@@ -56,13 +71,15 @@ export const Calculator: React.FC<BoxProps> = ({ ...props }) => {
       </FormControl>
       <DistanceInput onChange={setDistance} />
       <ValueDisplay value={dose} distance={distance} />
-      <Graph
-        exam={exam}
-        activity={activity}
-        injectionTime={injectionTime}
-        startTime={startTime}
-        duration={duration}
-      />
+      {showGraph && (
+        <Graph
+          exam={exam}
+          activity={activity}
+          injectionTime={injectionTime}
+          startTime={startTime}
+          duration={duration}
+        />
+      )}
     </Stack>
   )
 }
