@@ -1,6 +1,7 @@
 // Use the SentryWebpack plugin to upload the source maps during build step
 const SentryWebpackPlugin = require('@sentry/webpack-plugin')
 const withPlugins = require('next-compose-plugins')
+const withPreact = require('next-plugin-preact')
 const withTranspilation = require('next-transpile-modules')([
   '@47ng/chakra-next'
 ])
@@ -29,6 +30,9 @@ function publishEnv(names) {
 
 const nextConfig = {
   productionBrowserSourceMaps: true,
+  // future: {
+  //   webpack5: true
+  // },
   env: publishEnv(['VERCEL_GITHUB_COMMIT_SHA', 'SENTRY_DSN']),
   webpack: (config, options) => {
     // In `pages/_app.js`, Sentry is imported from @sentry/browser. While
@@ -87,6 +91,6 @@ const nextConfig = {
 }
 
 module.exports = withPlugins(
-  [withBundleAnalyzer, withTranspilation],
+  [withBundleAnalyzer, withTranspilation, withPreact],
   nextConfig
 )
