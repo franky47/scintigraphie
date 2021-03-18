@@ -1,15 +1,15 @@
-import React from 'react'
 import {
   FormControl,
   FormLabel,
   Radio,
   RadioGroup,
+  Select,
   Stack,
   StackProps,
   useBreakpointValue
 } from '@chakra-ui/react'
-import { Select } from '@chakra-ui/react'
-import { exams, Exam } from 'src/defs'
+import React from 'react'
+import { Exam, exams } from 'src/defs'
 
 export interface ModesProps extends StackProps {
   onExamChange: (exam: Exam | null) => void
@@ -18,8 +18,8 @@ export interface ModesProps extends StackProps {
 export const Modes: React.FC<ModesProps> = ({ onExamChange, ...props }) => {
   const [mode, setMode] = React.useState('')
   const [osseuse, setOsseuse] = React.useState('')
-  const [thyroide, setThyroide] = React.useState('')
-  const [cardiaque, setCardiaque] = React.useState('')
+  // const [thyroide, setThyroide] = React.useState('')
+  // const [cardiaque, setCardiaque] = React.useState('')
   const [tep, setTep] = React.useState('')
   const [aJeun, setAJeun] = React.useState('')
   const radioSpacing = useBreakpointValue({ base: 4, sm: 2 })
@@ -31,19 +31,21 @@ export const Modes: React.FC<ModesProps> = ({ onExamChange, ...props }) => {
     } else if (mode === 'parathyroides') {
       exam = exams.parathyroide
     } else if (mode === 'thyroide') {
-      if (thyroide === 'iode123') {
-        exam = exams.thyroideIode
-      } else if (thyroide === 'technetium') {
-        exam = exams.thyroideTechnetiumLibre
-      }
+      exam = exams.thyroideTechnetiumLibre
+      // if (thyroide === 'iode123') {
+      //   exam = exams.thyroideIode
+      // } else if (thyroide === 'technetium') {
+      //   exam = exams.thyroideTechnetiumLibre
+      // }
     } else if (mode === 'fevg') {
       exam = exams.fractionEjectionVentriculaireGauche
     } else if (mode === 'cardiaque') {
-      if (cardiaque === 'mibi') {
-        exam = exams.cardiologieMIBI
-      } else if (cardiaque === 'tl201') {
-        exam = exams.cardiologieThallium
-      }
+      exam = exams.cardiologieThallium
+      // if (cardiaque === 'mibi') {
+      //   exam = exams.cardiologieMIBI
+      // } else if (cardiaque === 'tl201') {
+      //   exam = exams.cardiologieThallium
+      // }
     } else if (mode === 'tep') {
       switch (tep) {
         case 'ffdg':
@@ -66,7 +68,7 @@ export const Modes: React.FC<ModesProps> = ({ onExamChange, ...props }) => {
       }
     }
     onExamChange(exam)
-  }, [mode, osseuse, thyroide, cardiaque, tep, aJeun, onExamChange])
+  }, [mode, osseuse, tep, aJeun, onExamChange])
 
   return (
     <Stack spacing={4} {...props}>
@@ -100,7 +102,7 @@ export const Modes: React.FC<ModesProps> = ({ onExamChange, ...props }) => {
           </RadioGroup>
         </FormControl>
       )}
-      {mode === 'thyroide' && (
+      {/* {mode === 'thyroide' && (
         <FormControl>
           <RadioGroup value={thyroide} onChange={setThyroide as any}>
             <Stack spacing={radioSpacing}>
@@ -110,8 +112,8 @@ export const Modes: React.FC<ModesProps> = ({ onExamChange, ...props }) => {
             </Stack>
           </RadioGroup>
         </FormControl>
-      )}
-      {mode === 'cardiaque' && (
+      )} */}
+      {/* {mode === 'cardiaque' && (
         <FormControl>
           <RadioGroup value={cardiaque} onChange={setCardiaque as any}>
             <Stack spacing={radioSpacing}>
@@ -123,7 +125,7 @@ export const Modes: React.FC<ModesProps> = ({ onExamChange, ...props }) => {
             </Stack>
           </RadioGroup>
         </FormControl>
-      )}
+      )} */}
       {mode === 'tep' && (
         <>
           <FormControl>

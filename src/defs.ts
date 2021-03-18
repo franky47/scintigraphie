@@ -27,11 +27,11 @@ export type Exams =
   | 'parathyroide'
   | 'thyroideTechnetiumLibre'
   | 'fractionEjectionVentriculaireGauche'
-  | 'cardiologieMIBI'
+  // | 'cardiologieMIBI'
   | 'choline'
   | 'fdg'
   | 'datscan'
-  | 'thyroideIode'
+  // | 'thyroideIode'
   | 'psma'
   | 'dotatoc'
   | 'cardiologieThallium'
@@ -57,10 +57,10 @@ export const exams: Record<Exams, Exam> = {
     isotope: isotopes.Tc99m,
     x: 0.0422045
   },
-  cardiologieMIBI: {
-    isotope: isotopes.Tc99m,
-    x: 0 // todo: TBD
-  },
+  // cardiologieMIBI: {
+  //   isotope: isotopes.Tc99m,
+  //   x: 0 // todo: TBD
+  // },
   choline: {
     isotope: isotopes.F18,
     x: 0.18605764
@@ -73,10 +73,10 @@ export const exams: Record<Exams, Exam> = {
     isotope: isotopes.I123,
     x: 0.041781459
   },
-  thyroideIode: {
-    isotope: isotopes.I123,
-    x: 0 // todo: TBD
-  },
+  // thyroideIode: {
+  //   isotope: isotopes.I123,
+  //   x: 0 // todo: TBD
+  // },
   psma: {
     isotope: isotopes.Ga68,
     x: 0.320006462
