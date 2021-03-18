@@ -17,7 +17,7 @@ function useValueMapping(value: number) {
     return 2 + (Math.min(100_000, value) - 50_000) / 50_000
   }
   const x = (value - 100) / (50_000 - 100)
-  return 1 + f(x, 10_000)
+  return 1 + f(x, 10)
 }
 
 export const DoseLevelIndicator: React.FC<DoseLevelIndicatorProps> = ({
