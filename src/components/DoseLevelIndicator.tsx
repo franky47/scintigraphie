@@ -1,6 +1,5 @@
 import { Svg } from '@47ng/chakra-next'
 import { Box, BoxProps, useColorModeValue, useToken } from '@chakra-ui/react'
-import { motion } from 'framer-motion'
 import React from 'react'
 
 export interface DoseLevelIndicatorProps extends BoxProps {
@@ -29,7 +28,6 @@ export const DoseLevelIndicator: React.FC<DoseLevelIndicatorProps> = ({
     useToken('colors', ['green.500', 'yellow.500', 'red.500']),
     useToken('colors', ['green.400', 'yellow.400', 'red.400'])
   )
-
   return (
     <Box {...props}>
       <Svg
@@ -43,10 +41,9 @@ export const DoseLevelIndicator: React.FC<DoseLevelIndicatorProps> = ({
         <rect width="1" height="1" x="0" y="0.5" fill={green} opacity={0.5} />
         <rect width="1" height="1" x="1" y="0.5" fill={yellow} opacity={0.5} />
         <rect width="1" height="1" x="2" y="0.5" fill={red} opacity={0.5} />
-        <motion.line
-          animate={{
-            x
-          }}
+        <line
+          x1={x}
+          x2={x}
           y1={0.25}
           y2={1.75}
           strokeWidth="0.01"
