@@ -71,7 +71,7 @@ export const Calculator: React.FC<BoxProps> = ({ ...props }) => {
       </FormControl>
       <DistanceInput onChange={setDistance} />
       <ValueDisplay value={dose} distance={distance} />
-      {showGraph && (
+      {!!showGraph && (
         <Graph
           exam={exam}
           activity={activity}
