@@ -177,8 +177,8 @@ export const ValueDisplay: React.FC<ValueDisplayProps> = ({
             />{' '}
           </StatNumber>
           <StatHelpText>
-            Cigarette{(cigarettes ?? 2) >= 2 ? 's' : ''} fumée
-            {(cigarettes ?? 2) >= 2 ? 's' : ''}
+            Cigarette{(cigarettes ?? 2) > 1 ? 's' : ''} fumée
+            {(cigarettes ?? 2) > 1 ? 's' : ''}
           </StatHelpText>
         </Stat>
       </StatGroup>
