@@ -1,16 +1,18 @@
-import React from 'react'
 import {
-  Text,
+  Box,
   BoxProps,
+  Stack,
   Stat,
+  StatGroup,
+  StatHelpText,
   StatLabel,
   StatNumber,
-  StatHelpText,
-  useColorModeValue,
-  Stack,
-  StatGroup
+  Text,
+  useColorModeValue
 } from '@chakra-ui/react'
-import { useSpring, useReducedMotion, useMotionValue } from 'framer-motion'
+import { useMotionValue, useReducedMotion, useSpring } from 'framer-motion'
+import React from 'react'
+import { DoseLevelIndicator } from './DoseLevelIndicator'
 
 export interface ValueDisplayProps extends BoxProps {
   value?: number
@@ -61,12 +63,36 @@ function useUnit(value: number | undefined) {
 function useColor(value: number | undefined) {
   return value === undefined
     ? 'gray'
-    : value > 500_000
+    : value > 50_000
     ? 'red'
     : value > 100
     ? 'yellow'
     : 'green'
 }
+
+function useEquivalentThreshold(value: number | undefined) {
+  if (value === undefined) {
+    return undefined
+  }
+  if (value <= 6.57) {
+    return '1 jour d’exposition naturelle = 6,57µSv en moyenne en France métropolitaine'
+  }
+  if (value <= 50) {
+    return 'Vol Paris – New York ou radiographie des poumons = 50 µSv'
+  }
+  if (value <= 100) {
+    return 'Vol aller-retour Paris New York = 100 µSv'
+  }
+  if (value <= 10_000) {
+    return 'Scanner abdominal = 10 mSv'
+  }
+  if (value <= 50_000) {
+    return 'Seuil de sur-risque de cancer incertain pour une exposition aïgue = 50 mSv'
+  }
+  return 'Seuil de sur-risque de cancer certain pour une exposition aïgue = 100 mSv'
+}
+
+// --
 
 export const ValueDisplay: React.FC<ValueDisplayProps> = ({
   value: valueMicroSv,
@@ -75,6 +101,12 @@ export const ValueDisplay: React.FC<ValueDisplayProps> = ({
 }) => {
   const accent = useColor(valueMicroSv)
   const { value, unit } = useUnit(valueMicroSv)
+  const eqThreshold = useEquivalentThreshold(valueMicroSv)
+  const joursExp =
+    valueMicroSv === undefined ? valueMicroSv : valueMicroSv / 6.57
+  const cigarettes =
+    valueMicroSv === undefined ? valueMicroSv : valueMicroSv / 7.3
+
   return (
     <Stack {...props}>
       <Stat>
@@ -101,6 +133,14 @@ export const ValueDisplay: React.FC<ValueDisplayProps> = ({
           <StatHelpText>à {distance}cm du patient</StatHelpText>
         )}
       </Stat>
+      {!!eqThreshold && (
+        <Box>
+          <DoseLevelIndicator valueMicroSv={valueMicroSv} />
+          <Text mt={2} mb={8} fontSize="sm" opacity={0.8}>
+            {eqThreshold}
+          </Text>
+        </Box>
+      )}
       <StatGroup>
         <Stat>
           <StatLabel fontSize="sm">Equivalent à</StatLabel>
@@ -109,14 +149,10 @@ export const ValueDisplay: React.FC<ValueDisplayProps> = ({
               fontVariantNumeric: 'tabular-nums'
             }}
           >
-            <AnimatedValue
-              value={
-                valueMicroSv === undefined ? valueMicroSv : valueMicroSv / 6.57
-              }
-            />{' '}
+            <AnimatedValue value={joursExp} />{' '}
           </StatNumber>
           <StatHelpText>
-            Jour(s) d’exposition naturelle{' '}
+            Jour{(joursExp ?? 2) > 1 ? 's' : ''} d’exposition naturelle{' '}
             <small>
               <em>(rayonnement cosmique, tellurique ect)</em>
             </small>
@@ -130,15 +166,20 @@ export const ValueDisplay: React.FC<ValueDisplayProps> = ({
             }}
           >
             <AnimatedValue
-              value={
-                valueMicroSv === undefined ? valueMicroSv : valueMicroSv / 7.3
-              }
+              value={cigarettes}
               formatter={value =>
-                value === undefined ? '--' : Math.ceil(value).toFixed()
+                value === undefined
+                  ? '--'
+                  : value > 5
+                  ? Math.round(value).toFixed()
+                  : value.toFixed(2)
               }
             />{' '}
           </StatNumber>
-          <StatHelpText>Cigarettes fumées</StatHelpText>
+          <StatHelpText>
+            Cigarette{(cigarettes ?? 2) >= 2 ? 's' : ''} fumée
+            {(cigarettes ?? 2) >= 2 ? 's' : ''}
+          </StatHelpText>
         </Stat>
       </StatGroup>
     </Stack>
