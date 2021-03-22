@@ -1,15 +1,15 @@
-import React from 'react'
+import { OutgoingLink } from '@47ng/chakra-next'
 import {
-  Text,
-  Stack,
-  StackProps,
-  UnorderedList,
-  ListItem,
   Divider,
   Icon,
-  List
+  List,
+  ListItem,
+  Stack,
+  StackProps,
+  Text,
+  UnorderedList
 } from '@chakra-ui/react'
-import { OutgoingLink } from '@47ng/chakra-next'
+import React from 'react'
 import { FiMail, FiPhone } from 'react-icons/fi'
 
 export interface OutroProps extends StackProps {}
@@ -47,7 +47,7 @@ export const Outro: React.FC<OutroProps> = ({ ...props }) => {
       </Text>
       <Text>
         Pour plus d’informations, référez-vous à la fiche informative{' '}
-        <em>“mon patient a eu une scintigraphie”</em>.
+        <em>“fiche patient”</em>.
       </Text>
       <Text as="div">
         En cas de questions, vous pouvez contacter :

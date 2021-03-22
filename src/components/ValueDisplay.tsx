@@ -74,8 +74,8 @@ function useEquivalentThreshold(value: number | undefined) {
   if (value === undefined) {
     return undefined
   }
-  if (value <= 6.57) {
-    return '1 jour d’exposition naturelle = 6,57µSv en moyenne en France métropolitaine'
+  if (value <= 7.945) {
+    return '1 jour d’exposition naturelle = 7,945µSv en moyenne en France métropolitaine'
   }
   if (value <= 50) {
     return 'Vol Paris – New York ou radiographie des poumons = 50 µSv'
