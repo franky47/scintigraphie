@@ -1,5 +1,5 @@
+import { Divider, Heading, Stack, StackProps, Text } from '@chakra-ui/react'
 import React from 'react'
-import { Heading, Text, Stack, StackProps, Divider } from '@chakra-ui/react'
 
 export interface IntroProps extends StackProps {}
 
@@ -25,8 +25,8 @@ export const Intro: React.FC<IntroProps> = ({ ...props }) => {
         <Text>
           Afin d'accéder à votre résultat, merci de remplir ci-dessous les
           renseignements nécessaires, auxquels vous avez accès sur la fiche
-          navette <em>“gestion en décroissance des déchets radioactifs”</em>{' '}
-          remis par le service de médecine nucléaire à votre patient.
+          navette <em>“fiche de suivi patient”</em> remis par le service de
+          médecine nucléaire à votre patient.
         </Text>
         <Text>
           Attention, le résultat peut être uniquement considéré comme une{' '}

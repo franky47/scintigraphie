@@ -23,9 +23,21 @@ const formatter = Intl.NumberFormat('fr-FR', {
   maximumFractionDigits: 2,
   minimumFractionDigits: 2
 })
+const intFormatter = Intl.NumberFormat('fr-FR')
 
 function formatValue(value: number | undefined) {
   return value !== undefined ? formatter.format(value) : '--'
+}
+
+function formatInteger(value: number | undefined) {
+  return value !== undefined ? intFormatter.format(value) : '--'
+}
+
+function formatDistance(valueCm: number) {
+  if (valueCm < 100) {
+    return `${valueCm}cm`
+  }
+  return `${valueCm / 100}m`
 }
 
 function useUnit(value: number | undefined) {
@@ -103,7 +115,7 @@ export const ValueDisplay: React.FC<ValueDisplayProps> = ({
   const { value, unit } = useUnit(valueMicroSv)
   const eqThreshold = useEquivalentThreshold(valueMicroSv)
   const joursExp =
-    valueMicroSv === undefined ? valueMicroSv : valueMicroSv / 6.57
+    valueMicroSv === undefined ? valueMicroSv : valueMicroSv / 7.945
   const cigarettes =
     valueMicroSv === undefined ? valueMicroSv : valueMicroSv / 7.3
 
@@ -130,7 +142,7 @@ export const ValueDisplay: React.FC<ValueDisplayProps> = ({
           </Text>
         </StatNumber>
         {!!distance && !!value && (
-          <StatHelpText>à {distance}cm du patient</StatHelpText>
+          <StatHelpText>à {formatDistance(distance)} du patient</StatHelpText>
         )}
       </Stat>
       {!!eqThreshold && (
@@ -149,10 +161,19 @@ export const ValueDisplay: React.FC<ValueDisplayProps> = ({
               fontVariantNumeric: 'tabular-nums'
             }}
           >
-            <AnimatedValue value={joursExp} />{' '}
+            <AnimatedValue
+              value={joursExp}
+              formatter={value =>
+                value === undefined
+                  ? '--'
+                  : value > 30
+                  ? formatInteger(Math.round(value))
+                  : formatValue(value)
+              }
+            />{' '}
           </StatNumber>
           <StatHelpText>
-            Jour{(joursExp ?? 2) > 1 ? 's' : ''} d’exposition naturelle{' '}
+            Jour{(joursExp ?? 2) > 1 ? 's' : ''} d’exposition naturelle <br />
             <small>
               <em>(rayonnement cosmique, tellurique ect)</em>
             </small>
@@ -171,8 +192,8 @@ export const ValueDisplay: React.FC<ValueDisplayProps> = ({
                 value === undefined
                   ? '--'
                   : value > 5
-                  ? Math.round(value).toFixed()
-                  : value.toFixed(2)
+                  ? formatInteger(Math.round(value))
+                  : formatValue(value)
               }
             />{' '}
           </StatNumber>

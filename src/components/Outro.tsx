@@ -47,7 +47,10 @@ export const Outro: React.FC<OutroProps> = ({ ...props }) => {
       </Text>
       <Text>
         Pour plus d’informations, référez-vous à la fiche informative{' '}
-        <em>“fiche patient”</em>.
+        <em>
+          “patient au retour d’une scintigraphie : tout ce qu’il faut savoir”
+        </em>{' '}
+        disponible dans les services.
       </Text>
       <Text as="div">
         En cas de questions, vous pouvez contacter :
