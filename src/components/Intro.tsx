@@ -34,6 +34,10 @@ export const Intro: React.FC<IntroProps> = ({ ...props }) => {
           prise en charge à une certaine distance du patient.
         </Text>
         <Text>Aucune donnée n’est conservée.</Text>
+        <Text fontSize="sm" color="gray.500">
+          <b>Note:</b> cette application n'est pas compatible avec Internet
+          Explorer.
+        </Text>
       </Stack>
       <Divider mt={8} mb={12} />
     </>
