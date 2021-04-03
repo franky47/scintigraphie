@@ -18,7 +18,7 @@ export const Intro: React.FC<IntroProps> = ({ ...props }) => {
         </Text>
         <Text>
           Un patient ayant bénéficié d’une scintigraphie ou d’une tomographie
-          par émission de positons (TEP) émet des rayonnements ionisants. En
+          par émission de positrons (TEP) émet des rayonnements ionisants. En
           effet, un produit radiopharmaceutique lui a été injecté afin de
           pouvoir réaliser les images.
         </Text>
